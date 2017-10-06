@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import $ from 'jquery';
 
 const options = {
     baseUrl : "https://api.trello.com/1/members/roqueperalta2/",
@@ -15,16 +16,6 @@ class App extends Component {
   }
 }
 
-class BoardName extends React.Component {
-    render() {
-        return (
-            <button className="board">
-                {/* TODO */}
-            </button>
-        );
-    }
-}
-
 class BoardList extends React.Component{
     constructor() {
         super();
@@ -37,15 +28,9 @@ class BoardList extends React.Component{
     }
     getBoards(){
         let url = options.baseUrl+"boards?"+ options.apiKey +  options.token + "&fields=name,id";
-        var request = new Request(url, {
-            headers: new Headers({
-                'Content-Type': 'application/json'
-            })
-        });
-
-        fetch(url).then(response => {
-            this.state.boards  = response;
-            console.log(response);
+        $.get(url,(data) => {
+            this.setState({boards : data});
+            console.log(data);
         });
     }
     render() {
@@ -57,9 +42,7 @@ class BoardList extends React.Component{
                     </div>
                     <div className="card-block">
                         {
-                            this.state.boards.map((board,index) => {
-                                <BoardName value={board.name} key="boardName-{index}" />
-                            })
+                            this.state.boards.map((board) => <BoardName value={board.name} key={board.id}/>)
                         }
                     </div>
                 </div>
@@ -73,7 +56,7 @@ class BoardDescriptor extends React.Component{
     constructor(){
         super();
         this.state = {
-            lists : []
+            lists : null
         }
     }
     render(){
@@ -84,14 +67,9 @@ class BoardDescriptor extends React.Component{
                         {"Board 1"}
                     </div>
                     <div className="card-block">
-
+                        <List />
                     </div>
                 </div>
-                { //example of how to use loops to render.. i'll use it
-                    this.state.lists.map(function(object, index){
-                        return <li>{index}</li>;
-                    })
-                }
             </div>
         );
     }
@@ -121,8 +99,5 @@ function BoardName(props) {
     );
 }
 
-function getRequest(url,method,contentType){
-
-}
 
 export default App;

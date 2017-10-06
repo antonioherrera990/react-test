@@ -5,6 +5,6 @@ import './index.css';
 
 
 ReactDOM.render(
-  <App />,
+  <App key="1asdf89ads7f"/>,
   document.getElementById('root')
 );
