@@ -9,18 +9,11 @@ const options = {
 }
 
 class App extends Component {
-  render() {
-    return (
-        [<BoardList></BoardList>, <BoardDescriptor></BoardDescriptor>]
-    );
-  }
-}
-
-class BoardList extends React.Component{
     constructor() {
         super();
         this.state = {
-           boards : []
+            selectedBoard : {},
+            boards : []
         }
     }
     componentDidMount(){
@@ -29,66 +22,82 @@ class BoardList extends React.Component{
     getBoards(){
         let url = options.baseUrl+"boards?"+ options.apiKey +  options.token + "&fields=name,id";
         $.get(url,(data) => {
-            this.setState({boards : data});
-            console.log(data);
+            this.setState({
+                boards : data,
+                selectedBoard: data ? data[0] : {}
+            });
         });
     }
     render() {
-        return(
+        return (
+            [<BoardList boards={this.state.boards}/>, <BoardDescriptor board={this.state.selectedBoard}/>]
+        );
+    }
+}
+
+function BoardList(props){
+    return(
+        <div className="col-md-3">
+            <div className="card">
+                <div className="card-header">
+                    {"Boards"}
+                </div>
+                <div className="card-block">
+                    {
+                        props.boards.map((board) => <BoardName value={board.name} key={board.id}/>)
+                    }
+                </div>
+            </div>
+        </div>
+    );
+}
+
+function BoardDescriptor(props){
+    return(
+        <div className="col-md-9">
+            <div className="card">
+                <div className="card-header">
+                    {props.board.name}
+                </div>
+                <div className="card-block">
+                    <div className="row">
+                        {
+                             //props.lists.map((list) => <List definition={list} key={list.id}/>)
+                        }
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    );
+}
+
+function List(props){
+    return(
             <div className="col-md-4">
                 <div className="card">
                     <div className="card-header">
-                        {"Boards"}
+                        {props.definition.name}
                     </div>
                     <div className="card-block">
                         {
-                            this.state.boards.map((board) => <BoardName value={board.name} key={board.id}/>)
+                            props.list.definition.map((act) =>
+                                <div className="activity" key={act.id}>
+                                    {act.name}
+                                </div>
+                            )
                         }
                     </div>
-                </div>
-            </div>
-        );
-    }
-
-}
-
-class BoardDescriptor extends React.Component{
-    constructor(){
-        super();
-        this.state = {
-            lists : null
-        }
-    }
-    render(){
-        return(
-            <div className="col-md-8">
-                <div className="card">
-                    <div className="card-header">
-                        {"Board 1"}
-                    </div>
-                    <div className="card-block">
-                        <List />
+                    <div class="card-block">
+                        <a href="#" className="card-link" onclick={addCard(props.list)}>Add a card...</a>
                     </div>
                 </div>
             </div>
-        );
-    }
+    );
 }
 
-class List extends React.Component{
-    constructor(){
-        super();
-        this.state = {
-            activities : []
-        }
-    }
-    render(){
-        return(
-            <div className="col-md-8">
-
-            </div>
-        );
-    }
+function addCard(list){
+    console.log(list);
 }
 
 function BoardName(props) {
@@ -98,6 +107,5 @@ function BoardName(props) {
         </div>
     );
 }
-
 
 export default App;
