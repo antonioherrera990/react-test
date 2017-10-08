@@ -17,12 +17,11 @@ class App extends React.Component{
         }
         this.updateSelectedBoard = this.updateSelectedBoard.bind(this);
     }
-
     componentDidMount(){
         this.getBoards();
     }
     getBoards(){
-        let url = options.baseUrl+"boards?"+ options.apiKey +  options.token + options.idNameFields;
+        let url = options.baseUrl+ options.boardsUrl + options.and + options.apiKey + options.and + options.token + options.and + options.idNameFields;
         $.get(url,(data) => {
             let newBoard = data ? data[0] : this.state.selectedBoard;
             newBoard.lists = [];

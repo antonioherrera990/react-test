@@ -4,8 +4,16 @@ import $ from 'jquery';
 import {options} from './Options';
 
 export default class BoardDescriptor extends React.Component{
-    componentDidMount(){
-        this.getLists(this.props.board);
+    constructor(props){
+        super(props);
+        this.state ={
+            id : this.props.board.id,
+            name : this.props.board.name,
+            lists : []
+        }
+    }
+    componentWillReceiveProps(props){
+        this.getLists(props);
     }
     render(){
         return(
@@ -17,7 +25,7 @@ export default class BoardDescriptor extends React.Component{
                     <div className="card-block">
                         <div className="row">
                             {
-                                this.props.board.lists.map((list) => <List definition={list} key={list.id}/>)
+                                this.state.lists.map((list) => <List {...list} key={list.id}/>)
                             }
                         </div>
                     </div>
@@ -25,16 +33,13 @@ export default class BoardDescriptor extends React.Component{
             </div>
         );
     }
-    getLists(board) {
-        // if(board.id != undefined){
-        //     let url = options.baseUrl+ board.id+ options.idNameFields + options.listFields + options.token +  options.apiKey ;
-        //     $.get(url,(data) => {
-        //         this.setState({
-        //             board : data
-        //         });
-        //         console.log(data);
-        //     });
-        // }
-        return [];
+    getLists(props) {
+        let url = options.baseUrl+ options.listUrl +props.board.id + "?"+ options.idNameFields + options.and + options.listFields + options.and + options.token + options.and + options.apiKey ;
+        $.get(url,(data) => {
+            let myState = Object.assign({}, this.state);
+            myState.lists = data.lists;
+            this.setState(myState);
+        });
     }
+
 }
