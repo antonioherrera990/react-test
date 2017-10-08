@@ -6,7 +6,21 @@ exports.options = {
     idNameFields : "fields=name,id",
     listFields : "lists=open&list_fields=id,name",
     listUrl : "boards/",
-    cardFields : "cards?fields=id,name,desc",
+    cardFields : "/cards?fields=id,name,desc",
     cardsUrl : "lists/",
     and: "&"
+}
+
+exports.getRequest = function(url) {
+    fetch('https://mywebsite.com/endpoint/', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            firstParam: 'yourValue',
+            secondParam: 'yourOtherValue',
+        })
+    })
 }

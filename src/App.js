@@ -34,14 +34,15 @@ class App extends React.Component{
     render() {
         return (
                 <div className="row">
-                    <BoardList boards={this.state.boards} onClickFunction={this.updateSelectedBoard.bind(this)}/>
+                    <BoardList boards={this.state.boards} clickHandler={this.updateSelectedBoard}/>
                     <BoardDescriptor board={this.state.selectedBoard}/>
                 </div>
         );
     }
     updateSelectedBoard(board) {
-        //TODO Check whether this set state should go here or in BoardDescriptor to update the view
-        console.log(board);
+        let myState = Object.assign({},this.state);
+        myState.selectedBoard = board;
+        this.setState(myState);
     }
 }
 

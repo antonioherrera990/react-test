@@ -4,7 +4,7 @@ import BoardListItem from "./BoardListItem";
 export default class BoardList extends React.Component{
     renderListItems(){
         return this.props.boards.map((board) => {
-            return <BoardListItem {...board} key={board.id}/>;
+            return <BoardListItem {...board} key={board.id} clickHandler={this.props.clickHandler.bind(this,board)} />;
         })
     }
     render(){
