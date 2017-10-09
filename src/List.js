@@ -26,7 +26,7 @@ export default class List extends React.Component{
                     <div className="card-block">
                         {this.state.cards.map(card => <Card {...card} key={card.id} />)}
                     </div>
-                    <ListControls actionHandler={this.updateCards.bind(this)}/>
+                    <ListControls actionHandler={this.postNewCard.bind(this)}/>
                 </div>
             </div>
         );
@@ -39,8 +39,11 @@ export default class List extends React.Component{
             this.setState(myState);
         });
     }
-    updateCards(card){
-        //TODO implement this method
-        console.log(card);
+    postNewCard(cardName){
+        cardName = encodeURIComponent(cardName);
+        let url = "https://api.trello.com/1/cards?idList="+ this.state.id +"&name=" + cardName + "&key=" + options.apiKey +"&token=" + options.token;
+        $.post(url,(data) => {
+           console.log(data);
+        });
     }
 }

@@ -11,7 +11,8 @@ export default class ListControls extends React.Component{
         if(this.state.isAdding){
             return(
                 <div className="card-block">
-                    <input placeholder="Please write! ENTER saves" onKeyUp={this.handleKeyPressed.bind(this)} />
+                    <span>Name of the new card:</span>
+                    <input placeholder="ENTER saves!" onKeyUp={this.handleKeyPressed.bind(this)} />
                 </div>
             )
         }
@@ -23,7 +24,7 @@ export default class ListControls extends React.Component{
     }
     handleKeyPressed(eventArgs){
         if (eventArgs.keyCode == 13) {
-            console.log(eventArgs.target.value);
+            this.props.actionHandler(eventArgs.target.value);
         }
     }
     handleAddCard(){
