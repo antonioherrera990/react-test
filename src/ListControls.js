@@ -13,6 +13,7 @@ export default class ListControls extends React.Component{
                 <div className="card-block">
                     <span>Name of the new card:</span>
                     <input placeholder="ENTER saves!" onKeyUp={this.handleKeyPressed.bind(this)} />
+                    <button onClick={this.cancelEdit.bind(this)}>Cancel</button>
                 </div>
             )
         }
@@ -25,11 +26,17 @@ export default class ListControls extends React.Component{
     handleKeyPressed(eventArgs){
         if (eventArgs.keyCode == 13) {
             this.props.actionHandler(eventArgs.target.value);
+            this.cancelEdit();
         }
     }
     handleAddCard(){
         this.setState({
            isAdding: true
+        });
+    }
+    cancelEdit(){
+        this.setState({
+            isAdding: false
         });
     }
 

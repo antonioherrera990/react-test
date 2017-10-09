@@ -13,6 +13,7 @@ export default class List extends React.Component{
             cards : []
         }
     }
+
     componentDidMount(){
         this.getCards();
     }
@@ -23,8 +24,8 @@ export default class List extends React.Component{
                     <div className="card-header">
                         {this.props.name}
                     </div>
-                    <div className="card-block">
-                        {this.state.cards.map(card => <Card {...card} key={card.id} />)}
+                    <div className={"card-block " + options.listSelector} >
+                        {this.state.cards.map(card => <Card {...card}  key={card.id} />)}
                     </div>
                     <ListControls actionHandler={this.postNewCard.bind(this)}/>
                 </div>
@@ -41,9 +42,21 @@ export default class List extends React.Component{
     }
     postNewCard(cardName){
         cardName = encodeURIComponent(cardName);
-        let url = "https://api.trello.com/1/cards?idList="+ this.state.id +"&name=" + cardName + "&key=" + options.apiKey +"&token=" + options.token;
+        let url = "https://api.trello.com/1/cards?idList="+ this.state.id +"&name=" + cardName + "&" + options.apiKey +"&" + options.token;
         $.post(url,(data) => {
-           console.log(data);
+           this.addNewCard(data);
         });
+    }
+    addNewCard(cardData){
+        let myState = Object.assign({}, this.state);
+        let newCard = {
+            id: cardData.id,
+            name : cardData.name
+        };
+        myState.cards.push(newCard);
+        this.setState(myState);
+    }
+    receiveCard() {
+        console.log("receiving card");
     }
 }

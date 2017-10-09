@@ -25,7 +25,7 @@ export default class BoardDescriptor extends React.Component{
                     <div className="card-block">
                         <div className="row">
                             {
-                                this.state.lists.map((list) => <List {...list} key={list.id}/>)
+                                this.state.lists.map((list) => <List {...list} key={list.id} updateHandler={this.handleUpdate.bind(this)}/>)
                             }
                         </div>
                     </div>
@@ -40,6 +40,9 @@ export default class BoardDescriptor extends React.Component{
             myState.lists = data.lists;
             this.setState(myState);
         });
+    }
+    handleUpdate(idListFrom, idListTo, card){
+        console.log(idListTo,idListFrom, card);
     }
 
 }

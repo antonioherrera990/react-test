@@ -6,9 +6,10 @@ exports.options = {
     idNameFields : "fields=name,id",
     listFields : "lists=open&list_fields=id,name",
     listUrl : "boards/",
-    cardFields : "/cards?fields=id,name,desc",
+    cardFields : "/cards?fields=id,name,idList,desc",
     cardsUrl : "lists/",
-    and: "&"
+    and: "&",
+    listSelector: "card-list"
 }
 
 exports.getRequest = function(url) {
