@@ -1,6 +1,5 @@
 import React from 'react';
 import Card from "./Card";
-import $ from 'jquery';
 import {options} from './Options';
 import ListControls from './ListControls';
 
@@ -31,8 +30,14 @@ export default class List extends React.Component{
     postNewCard(cardName){
         cardName = encodeURIComponent(cardName);
         let url = "https://api.trello.com/1/cards?idList="+ this.state.id +"&name=" + cardName + "&" + options.apiKey +"&" + options.token;
-        $.post(url,(data) => {
-           this.addNewCard(data);
+        fetch(url, {
+            method: 'POST',
+        }).then((response) => {
+            return response.json();
+        }).then(data => {
+            this.addNewCard(data);
+        }).catch(function(err) {
+            alert("Something went wrong! " +err.message);
         });
     }
     addNewCard(cardData){

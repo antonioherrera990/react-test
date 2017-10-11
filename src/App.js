@@ -22,13 +22,22 @@ class App extends React.Component{
     }
     getBoards(){
         let url = options.baseUrl+ options.boardsUrl + options.and + options.apiKey + options.and + options.token + options.and + options.idNameFields;
-        $.get(url,(data) => {
+        fetch(url, {
+            method: 'GET',
+            headers: new Headers({
+                'Content-Type': 'application/json'
+            })
+        }).then((response) => {
+            return response.json();
+        }).then(data => {
             let newBoard = data ? data[0] : this.state.selectedBoard;
             newBoard.lists = [];
             this.setState({
                 selectedBoard: newBoard,
                 boards: data
             });
+        }).catch(function(err) {
+            alert("Something went wrong! " +err.message);
         });
     }
     render() {

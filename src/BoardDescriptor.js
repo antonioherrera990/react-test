@@ -1,6 +1,5 @@
 import React from 'react';
 import List from "./List";
-import $ from 'jquery';
 import {options} from './Options';
 
 export default class BoardDescriptor extends React.Component{
@@ -43,8 +42,14 @@ export default class BoardDescriptor extends React.Component{
     getLists(props) {
         this.clearListsOfThisBoard();
         let url = options.baseUrl+ options.listUrl +props.board.id + "?"+ options.idNameFields + options.and + options.listFields + options.and + options.token + options.and + options.apiKey ;
-        $.get(url,(data) => {
+        fetch(url, {
+            method: 'GET',
+        }).then((response) => {
+            return response.json();
+        }).then(data => {
             this.getCards(data.lists);
+        }).catch(function(err) {
+            alert("Something went wrong! " +err.message);
         });
     }
     clearListsOfThisBoard(){
@@ -57,11 +62,17 @@ export default class BoardDescriptor extends React.Component{
     }
     getOneListCards(list){
         let url = options.baseUrl+ options.cardsUrl + list.id + options.cardFields + options.and + options.token + options.and + options.apiKey ;
-        $.get(url,(data) => {
+        fetch(url, {
+            method: 'GET',
+        }).then((response) => {
+            return response.json();
+        }).then(data => {
             list.cards = data;
             let myState = Object.assign({}, this.state);
             myState.lists.push(list)
             this.setState(myState);
+        }).catch(function(err) {
+            alert("Something went wrong! " +err.message);
         });
     }
     handleDroppedCard (receiverListId){
@@ -74,13 +85,14 @@ export default class BoardDescriptor extends React.Component{
     }
     moveCard(receiverListId){
         let putUrl = "https://api.trello.com/1/cards/" + this.droppedCard.id+ "?idList=" + receiverListId + options.and + options.apiKey + options.and + options.token;
-        $.ajax({
-            url: putUrl,
-            type: 'PUT',
-            success: (data) => {
-                this.showCardMove(receiverListId);
-            }
+        fetch(putUrl, {
+            method: 'PUT',
+        }).then(() => {
+            this.showCardMove(receiverListId);
+        }).catch(function(err) {
+            alert("Something went wrong! " +err.message);
         });
+
     }
     showCardMove(receiverListId){
         let myState = Object.assign({}, this.state);
