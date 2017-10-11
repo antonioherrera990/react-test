@@ -1,6 +1,5 @@
 import React from 'react';
 import './App.css';
-import $ from 'jquery';
 import BoardList from './BoardList';
 import BoardDescriptor from './BoardDescriptor';
 import {options} from './Options';
