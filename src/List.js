@@ -10,12 +10,8 @@ export default class List extends React.Component{
         this.state = {
             id: props.id,
             name : props.name,
-            cards : []
+            cards : props.cards
         }
-    }
-
-    componentDidMount(){
-        this.getCards();
     }
     render(){
         return(
@@ -24,21 +20,13 @@ export default class List extends React.Component{
                     <div className="card-header">
                         {this.props.name}
                     </div>
-                    <div className={"card-block " + options.listSelector} >
-                        {this.state.cards.map(card => <Card {...card}  key={card.id} />)}
+                    <div className={"card-block " + options.listSelector} onDrop={this.handleDroppedCard.bind(this)} onDragOver={(e) => e.preventDefault()} >
+                        {this.state.cards.map(card => <Card {...card}  key={card.id} cardDraggedHandler={this.handleCardDrag.bind(this)} />)}
                     </div>
                     <ListControls actionHandler={this.postNewCard.bind(this)}/>
                 </div>
             </div>
         );
-    }
-    getCards() {
-        let url = options.baseUrl+ options.cardsUrl +this.state.id + options.cardFields + options.and + options.token + options.and + options.apiKey ;
-        $.get(url,(data) => {
-            let myState = Object.assign({}, this.state);
-            myState.cards = data;
-            this.setState(myState);
-        });
     }
     postNewCard(cardName){
         cardName = encodeURIComponent(cardName);
@@ -56,7 +44,12 @@ export default class List extends React.Component{
         myState.cards.push(newCard);
         this.setState(myState);
     }
-    receiveCard() {
-        console.log("receiving card");
+    handleCardDrag(card) {
+        this.props.cardDraggedHandler(card);
     }
+    handleDroppedCard(){
+        this.props.handleDroppedCard(this.props.id);
+    }
+
+
 }

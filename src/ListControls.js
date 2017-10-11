@@ -24,7 +24,7 @@ export default class ListControls extends React.Component{
         )
     }
     handleKeyPressed(eventArgs){
-        if (eventArgs.keyCode == 13) {
+        if (eventArgs.keyCode === 13) {
             this.props.actionHandler(eventArgs.target.value);
             this.cancelEdit();
         }
