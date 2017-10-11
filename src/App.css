@@ -1,24 +1,21 @@
-.App {
+.panel{
+  padding: 6px;
+  border : 1px solid black;
+  background-color: aliceblue;
+}
+.panel__header{
+  padding: 10 px;
+  background-color: gray;
+  border : 1px solid black;
+}
+.panel__footer{
+  background-color: antiquewhite;
+}
+.panel__footer__link{
   text-align: center;
 }
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+.card{
+  padding: 10px;
+  border-left: 4px solid red;
 }
 
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
-}
-
-.App-intro {
-  font-size: large;
-}
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
