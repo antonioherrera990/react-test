@@ -9,12 +9,12 @@ export default class BoardList extends React.Component{
     }
     render(){
         return(
-            <div className="col-md-3">
-                <div className="card">
-                    <div className="card-header">
+            <div className="left-menu">
+                <div className="panel panel--boardList">
+                    <div className="panel__header panel_header--boardList">
                         {"Boards"}
                     </div>
-                    <div className="card-block">
+                    <div className="panel__body">
                         {this.renderListItems()}
                     </div>
                 </div>

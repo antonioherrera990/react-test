@@ -14,12 +14,12 @@ export default class List extends React.Component{
     }
     render(){
         return(
-            <div className="col-md-4">
-                <div className="card">
-                    <div className="card-header">
+            <div className="three-col">
+                <div className="panel panel--list">
+                    <div className="panel__header">
                         {this.props.name}
                     </div>
-                    <div className={"card-block " + options.listSelector} onDrop={this.handleDroppedCard.bind(this)} onDragOver={(e) => e.preventDefault()} >
+                    <div className="panel__body" onDrop={this.handleDroppedCard.bind(this)} onDragOver={(e) => e.preventDefault()} >
                         {this.state.cards.map(card => <Card {...card}  key={card.id} cardDraggedHandler={this.handleCardDrag.bind(this)} />)}
                     </div>
                     <ListControls actionHandler={this.postNewCard.bind(this)}/>

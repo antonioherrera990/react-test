@@ -1,5 +1,4 @@
 import React from 'react';
-import './App.css';
 import BoardList from './BoardList';
 import BoardDescriptor from './BoardDescriptor';
 import {options} from './Options';
@@ -41,7 +40,7 @@ class App extends React.Component{
     }
     render() {
         return (
-                <div className="row">
+                <div className="row app">
                     <BoardList boards={this.state.boards} clickHandler={this.updateSelectedBoard}/>
                     <BoardDescriptor board={this.state.selectedBoard}/>
                 </div>

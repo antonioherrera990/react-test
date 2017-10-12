@@ -17,12 +17,12 @@ export default class BoardDescriptor extends React.Component{
     }
     render(){
         return(
-            <div className="col-md-9">
-                <div className="card">
-                    <div className="card-header">
+            <div className="main-content">
+                <div className="panel panel--boardDescriptor">
+                    <div className="panel__header panel__header--boardDescriptor">
                         {this.props.board.name}
                     </div>
-                    <div className="card-block">
+                    <div className="panel__body">
                         <div className="row">
                             {
                                 this.state.lists.map(
