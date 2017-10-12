@@ -23,6 +23,7 @@ Main technologies used to develop this test.
 - webpack
 - babel
 - stylus
+- HTML5 Drag and Drop API
 
 
 
